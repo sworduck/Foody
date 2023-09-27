@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Foody</string>
+    <string name="splash_screen">SplashScreen</string>
+    <string name="shopping_cart">ShoppingCart</string>
+    <string name="card_product">CardProduct</string>
+    <string name="back_button">Back</string>
+    <string name="catalog">Catalog</string>
+</resources>
