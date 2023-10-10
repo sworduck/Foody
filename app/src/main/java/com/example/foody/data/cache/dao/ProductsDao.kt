@@ -10,7 +10,7 @@ import com.example.foody.data.cache.entity.ProductEntity
 @Dao
 interface ProductsDao {
     @Query("SELECT * FROM productEntity")
-    suspend fun getAllProducts(): List<ProductEntity>
+    fun getAllProducts(): List<ProductEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg productsEntity: ProductEntity)

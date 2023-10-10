@@ -21,7 +21,7 @@ class CacheDataSource(
     ) {
 
     //Category
-    suspend fun fetchCategoryList(): List<CategoriesItem> {
+     fun fetchCategoryList(): List<CategoriesItem> {
         return categoriesDao.getAllCategories().map { it.toCategoriesItem() }
     }
 
@@ -38,7 +38,7 @@ class CacheDataSource(
     }
 
     //Tags
-    suspend fun fetchTagList(): List<TagsItem> {
+    fun fetchTagList(): List<TagsItem> {
         return tagsDao.getAllTags().map { it.toTagsItem() }
     }
 
@@ -55,7 +55,7 @@ class CacheDataSource(
     }
 
     //Products
-    suspend fun fetchProductList(): List<ProductsItem> {
+    fun fetchProductList(): List<ProductsItem> {
         return productsDao.getAllProducts().map { it.toProductItem() }
     }
 

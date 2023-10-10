@@ -9,7 +9,7 @@ import com.example.foody.data.cache.entity.TagEntity
 @Dao
 interface TagsDao {
     @Query("SELECT * FROM tagEntity")
-    suspend fun getAllTags(): List<TagEntity>
+    fun getAllTags(): List<TagEntity>
 
     @Insert
     fun insert(vararg tagEntity: TagEntity)
