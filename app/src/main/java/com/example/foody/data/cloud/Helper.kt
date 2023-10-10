@@ -5,9 +5,6 @@ import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
 
-/**
- * @author saurabh
- */
 fun <T> getResponse(@ApplicationContext context: Context, jsonName: String, cls: Class<T>): T {
     val gson = Gson()
     return gson.fromJson(

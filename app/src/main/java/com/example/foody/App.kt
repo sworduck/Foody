@@ -4,9 +4,6 @@ import android.app.Application
 import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
-/**
- * @author saurabh
- */
 @HiltAndroidApp
 class App: Application() {
 

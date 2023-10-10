@@ -2,9 +2,8 @@ package com.example.foody.ui.screens
 
 import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,14 +22,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.navArgument
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.foody.MainViewModel
-import com.example.foody.ui.FoodyScreen
+import com.example.foody.R
+import com.example.foody.ui.components.FoodyButton
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -39,48 +40,51 @@ fun CardProductScreen(
     navController: NavHostController,
     id: Int = 1,
 ) {
-
-    val product = viewModel.productFlow.collectAsState().value.first { it.id == id }
+    val product = viewModel.catalogUiState.collectAsState().value.productList.first { it.id == id }
+//    val product = viewModel.productFlow.collectAsState().value.first { it.id == id }
     Scaffold(
         bottomBar = {
             FoodyButton(
                 onClick = {
                     viewModel.saveInCart(id, product.count + 1)
-                    navController.navigate(FoodyScreen.ShoppingCart.name)
+                    navController.navigate("ShoppingCart/${id}")
                 },
                 modifier = Modifier
-                    .padding(16.dp, 12.dp)
+                    .padding(horizontal = 8.dp)
                     .fillMaxWidth(),
                 content = {
-                    Text(text = "В корзину за ${product.price_current} ₽")
-                })
+                    Text(text = "В корзину за ${product.price_current} ₽", fontSize = 16.sp)
+                },
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+            )
         }
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
             item {
                 GlideImage(
                     modifier = Modifier.fillMaxWidth(),
-                    model = Uri.parse("file:///android_asset/1.png"),
+                    model = Uri.parse(stringResource(id = R.string.picture_url)),
                     contentDescription = null
                 )
             }
             item {
-                Text(text = "${product.name}", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp,24.dp))
+                Text(text = product.name, style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp,24.dp))
             }
             item {
-                Text(text = "${product.description}",Modifier.padding(16.dp))
+                Text(text = product.description,Modifier.padding(16.dp), color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.6f))
             }
 
             itemsIndexed(
                 listOf(
-                    Pair("Вес", "${product.measure} ${product.measure_unit}"),
-                    Pair("Энергетическая ценность", "${product.energy_per_100_grams}"),
-                    Pair("Белки", "${product.proteins_per_100_grams}"),
-                    Pair("Жиры", "${product.fats_per_100_grams}"),
-                    Pair("Углеводы", "${product.carbohydrates_per_100_grams}"),
+                    Pair(R.string.measure, "${product.measure} ${product.measure_unit}"),
+                    Pair(R.string.energy_per_100_grams, "${product.energy_per_100_grams}"),
+                    Pair(R.string.proteins_per_100_grams, "${product.proteins_per_100_grams}"),
+                    Pair(R.string.fats_per_100_grams, "${product.fats_per_100_grams}"),
+                    Pair(R.string.carbohydrates_per_100_grams, "${product.carbohydrates_per_100_grams}"),
                 )
             ) { _, item ->
-                CardProductItem(propertyName = item.first, properties = item.second)
+                CardProductItem(propertyNameId = item.first, properties = item.second)
             }
         }
     }
@@ -102,12 +106,24 @@ fun CardProductScreen(
 
 @Composable
 fun CardProductItem(
-    propertyName: String,
+    propertyNameId: Int,
     properties: String,
 ) {
     Divider()
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp,13.dp)) {
-        Text(text = "$propertyName")
-        Text(text = "$properties")
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp, 13.dp)) {
+        Text(
+            modifier = Modifier.padding(end = 16.dp),
+            text = stringResource(id = propertyNameId), color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.6f)
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Text(text = properties)
     }
+}
+
+@Preview
+@Composable
+fun CardProductItemPreview() {
+    CardProductItem(propertyNameId = R.string.measure, properties = "1 кг")
 }

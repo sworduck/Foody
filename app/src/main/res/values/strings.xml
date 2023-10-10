@@ -5,4 +5,15 @@
     <string name="card_product">CardProduct</string>
     <string name="back_button">Back</string>
     <string name="catalog">Catalog</string>
+    <string name="error_unknown">error_unknown</string>
+    <string name="select_dishes">Подобрать блюда</string>
+    <string name="done_button_text">Готово</string>
+    <string name="search_dishes">Найти блюдо</string>
+    <string name="picture_url">file:///android_asset/1.png</string>
+    <string name="order_sent_to_company">Заказ отправлен на предприятие</string>
+    <string name="measure">Вес</string>
+    <string name="energy_per_100_grams">Энергетическая ценность</string>
+    <string name="proteins_per_100_grams">Белки</string>
+    <string name="fats_per_100_grams">Жиры</string>
+    <string name="carbohydrates_per_100_grams">Углеводы</string>
 </resources>
