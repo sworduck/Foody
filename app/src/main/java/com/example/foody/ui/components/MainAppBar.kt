@@ -49,15 +49,17 @@ fun MainAppBar(
         navigationIcon = {
             BadgedBox(
                 badge = {
-                    if(countOfSelectedTags() > 0) {
-                        Badge {
-                            val badgeNumber = countOfSelectedTags().toString()
-                            Text(
-                                badgeNumber,
-                                modifier = Modifier.semantics {
-                                    contentDescription = "$badgeNumber new notifications"
-                                }
-                            )
+                    countOfSelectedTags().let{
+                        if(it > 0) {
+                            Badge {
+                                val badgeNumber = it.toString()
+                                Text(
+                                    badgeNumber,
+                                    modifier = Modifier.semantics {
+                                        contentDescription = "$badgeNumber new notifications"
+                                    }
+                                )
+                            }
                         }
                     }
                 },

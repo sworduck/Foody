@@ -52,7 +52,6 @@ fun CupcakeAppBar(
     modifier: Modifier = Modifier,
     tagList: List<TagsItem>,
     changeTag: (Int, Boolean) -> Unit,
-    countOfSelectedTags: () -> Int,
     filterFromSearchProducts: (String) -> Unit,
     filterFromTagsProducts: () -> Unit,
     clearSearchProducts: () -> Unit
@@ -79,7 +78,7 @@ fun CupcakeAppBar(
             } else {
                 MainAppBar(
                     modifier = modifier,
-                    countOfSelectedTags = countOfSelectedTags,
+                    countOfSelectedTags = { tagList.count { it.selected } },
                     showSheet = { showSheet = true },
                     showSearchAppBar = { showSearchAppBar = true }
                 )
@@ -128,7 +127,6 @@ fun FoodyApp(
                 navigateUp = { navController.navigateUp() },
                 tagList = viewModel.tagFlow.collectAsState().value,
                 changeTag = viewModel::changeTag,
-                countOfSelectedTags = viewModel::getCountOfSelectedTags,
                 filterFromSearchProducts = viewModel::filterFromSearchProducts,
                 filterFromTagsProducts = viewModel::filterFromTagsProducts,
                 clearSearchProducts = {
