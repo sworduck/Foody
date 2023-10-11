@@ -80,10 +80,6 @@ class MainViewModel @Inject constructor(
         _tagFlow.value.first { it.id == id }.selected = isSelected
     }
 
-    fun getCountOfSelectedTags(): Int {
-        return _tagFlow.value.count { it.selected }
-    }
-
     fun filterFromTagsProducts() {
         _catalogUiState.update {
             it.copy(filteredProductList = _catalogUiState.value.productList.filter { product ->
